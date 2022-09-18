@@ -34,7 +34,7 @@ export default {
       identification_url: process.env.VUE_APP_IDENTIFICATION_URL,
     },
     nav: [
-      { title: 'CDEs', to: { name: 'home' }, icon: 'mdi-home' },
+      { title: 'CDEs', to: { name: 'environments' }, icon: 'mdi-home' },
       { title: 'About', to: { name: 'about' }, icon: 'mdi-information-outline' },
     ]
   }),

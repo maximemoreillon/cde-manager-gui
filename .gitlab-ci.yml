@@ -13,9 +13,9 @@ services:
 
 
 build:
+  stage: build
   only:
     - master
-  stage: build
   tags:
     - dind
   before_script:

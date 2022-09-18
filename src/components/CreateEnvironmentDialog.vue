@@ -13,6 +13,11 @@
     
             <v-form @submit.prevent="create_environment()">
             <v-card-text>
+                <v-row>
+                    <v-col>
+                        <v-text-field label="Environment name" v-model="environmentSettings.name"></v-text-field>
+                    </v-col>
+                </v-row>
                     <v-row>
                         <v-col>
                             <v-text-field
@@ -26,13 +31,18 @@
                             <v-text-field label="Password" type="password" v-model="environmentSettings.password"></v-text-field>
                         </v-col>
                     </v-row>
+                    <v-row>
+                        <v-col>
+                            <v-text-field label="Password confirm" type="password" v-model="password_confirm"></v-text-field>
+                        </v-col>
+                    </v-row>
  
                 </v-card-text>
                 
                 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" type="submit" text>
+                    <v-btn color="primary" type="submit" text :disabled="!valid">
                         Create
                     </v-btn>
                 </v-card-actions>
@@ -48,9 +58,11 @@ export default {
         return {
             dialog: false,
             environmentSettings: {
+                name: '',
                 username: '',
                 password: '',
-            }
+            },
+            password_confirm: ''
 
         }
     },
@@ -67,6 +79,13 @@ export default {
             }
         },
 
+    },
+    computed: {
+        valid(){
+            return this.username !== '' &&
+                this.environmentSettings.password !== '' &&
+                this.password_confirm === this.environmentSettings.password
+        }
     }
 }
 </script>

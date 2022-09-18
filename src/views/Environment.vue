@@ -21,6 +21,11 @@
     <v-card-text v-if="environment">
       <v-row align="baseline">
         <v-col>
+          Name: {{environment.name}}
+        </v-col>
+      </v-row>
+      <v-row align="baseline">
+        <v-col>
           ID: {{environment._id}}
         </v-col>
       </v-row>
@@ -29,7 +34,7 @@
           port: {{environment.service.spec.ports[0].nodePort}}
         </v-col>
       </v-row>
-      <v-row>
+      <v-row align="baseline">
         <v-col cols="auto">
           Status: 
         </v-col>

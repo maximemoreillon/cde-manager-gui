@@ -13,9 +13,16 @@
       <v-data-table
         :headers="headers"
         :items="items">
+
         <template v-slot:[`item._id`]="{ item }">
           <router-link :to="{name: 'environment', params: {_id: item._id}}">
             {{item._id}}
+          </router-link>
+        </template>
+
+        <template v-slot:[`item.name`]="{ item }">
+          <router-link :to="{name: 'environment', params: {_id: item._id}}">
+            {{item.name}}
           </router-link>
         </template>
         
@@ -35,7 +42,9 @@ export default {
   data(){
     return {
       headers: [
-        { text: 'ID', value: '_id'}
+        { text: 'ID', value: '_id'},
+        { text: 'Name', value: 'name' },
+        { text: 'User ID', value: 'user_id' },
       ],
       items: []
     }

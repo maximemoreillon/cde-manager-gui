@@ -62,6 +62,11 @@
           const route = `/environments/${this.environment_id}`
           const { data } = await this.axios.get(route)
           this.environment = data
+
+          if (this.environmentPhase === 'Pending') {
+            setTimeout(this.get_environment, 3000)
+          }
+
         } catch (error) {
           console.error(error)
         }
@@ -83,10 +88,12 @@
       environment_id(){
         return this.$route.params._id
       },
+      environmentPhase(){
+        return this.environment.pod.status.phase
+      },
       chipColor(){
-        const {phase} = this.environment.pod.status
-        if (phase === 'Pending') return 'orange'
-        else if (phase === 'Running') return 'green'
+        if (this.environmentPhase === 'Pending') return 'orange'
+        else if (this.environmentPhase === 'Running') return 'green'
         else return ''
       }
     }

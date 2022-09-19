@@ -31,6 +31,11 @@
       </v-row>
       <v-row align="baseline">
         <v-col>
+          User: {{environment.user_id}}
+        </v-col>
+      </v-row>
+      <v-row align="baseline">
+        <v-col>
           port: {{environment.service.spec.ports[0].nodePort}}
         </v-col>
       </v-row>

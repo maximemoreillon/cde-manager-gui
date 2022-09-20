@@ -12,7 +12,8 @@
     <v-card-text>
       <v-data-table
         :headers="headers"
-        :items="items">
+        :items="items"
+        :loading="loading">
 
         <template v-slot:[`item._id`]="{ item }">
           <router-link :to="{name: 'environment', params: {_id: item._id}}">
@@ -46,7 +47,8 @@ export default {
         { text: 'Name', value: 'name' },
         { text: 'User ID', value: 'user_id' },
       ],
-      items: []
+      items: [],
+      loading: false,
     }
   },
   mounted(){
@@ -54,6 +56,7 @@ export default {
   },
   methods: {
     async get_environments() {
+      this.loading = true
       try {
         const route = '/environments'
         const { data } = await this.axios.get(route)
@@ -61,6 +64,9 @@ export default {
 
       } catch (error) {
         console.error(error)
+      }
+      finally {
+        this.loading = false
       }
     },
     

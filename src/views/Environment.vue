@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="30rem" class="mx-auto">
+  <v-card max-width="30rem" class="mx-auto" :loading="loading">
     <v-toolbar flat>
       <v-row align="baseline">
         <v-col cols="auto">
@@ -61,6 +61,7 @@
     data(){
       return {
         environment: null,
+        loading: false,
       }
     },
     mounted(){
@@ -68,6 +69,8 @@
     },
     methods: {
       async get_environment() {
+        this.loading = true
+
         try {
           const route = `/environments/${this.environment_id}`
           const { data } = await this.axios.get(route)
@@ -77,8 +80,12 @@
             setTimeout(this.get_environment, 3000)
           }
 
-        } catch (error) {
+        }
+        catch (error) {
           console.error(error)
+        }
+        finally {
+          this.loading = false
         }
       },
       async delete_environment() {

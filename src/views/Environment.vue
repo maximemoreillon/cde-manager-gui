@@ -39,6 +39,11 @@
           port: {{environment.service.spec.ports[0].nodePort}}
         </v-col>
       </v-row>
+      <v-row align="baseline" v-if="false">
+        <v-col>
+          <a :href="environmentUrl" target="_blank">{{environmentUrl}}</a>
+        </v-col>
+      </v-row>
       <v-row align="baseline">
         <v-col cols="auto">
           Status: 
@@ -110,6 +115,20 @@
       chipColor(){
         if (this.environmentReady) return 'green'
         else return 'red'
+      },
+      podNodeport(){
+        return this.environment.service.spec.ports[0].nodePort
+      },
+      environmentUrl(){
+
+        const apiUrl = new URL(process.env.VUE_APP_CDE_MANAGER_API_URL)
+
+        const {
+          protocol,
+          hostname
+        } = apiUrl
+
+        return `${protocol}//${hostname}:${this.podNodeport}`
       }
     }
 

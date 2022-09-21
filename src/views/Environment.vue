@@ -45,7 +45,7 @@
         </v-col>
         <v-col>
           <v-chip :color="chipColor">
-            {{environment.pod.status.phase}}
+            {{ environmentReady ? 'Ready' : 'Not ready' }}
           </v-chip>
         </v-col>
       </v-row>
@@ -76,9 +76,7 @@
           const { data } = await this.axios.get(route)
           this.environment = data
 
-          if (this.environmentPhase === 'Pending') {
-            setTimeout(this.get_environment, 3000)
-          }
+          if (!this.environmentReady) setTimeout(this.get_environment, 3000)
 
         }
         catch (error) {
@@ -105,13 +103,13 @@
       environment_id(){
         return this.$route.params._id
       },
-      environmentPhase(){
-        return this.environment.pod.status.phase
+      environmentReady(){
+        const { readyReplicas, replicas } = this.environment.deployment.status
+        return readyReplicas === replicas
       },
       chipColor(){
-        if (this.environmentPhase === 'Pending') return 'orange'
-        else if (this.environmentPhase === 'Running') return 'green'
-        else return ''
+        if (this.environmentReady) return 'green'
+        else return 'red'
       }
     }
 

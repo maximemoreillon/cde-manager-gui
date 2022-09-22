@@ -17,7 +17,7 @@
 
 
         <template v-slot:[`item.metadata.name`]="{ item }">
-          <router-link :to="{name: 'environment', params: {_id: item.metadata.name}}">
+          <router-link :to="{name: 'environment', params: {name: item.metadata.name}}">
             {{item.metadata.name}}
           </router-link>
         </template>

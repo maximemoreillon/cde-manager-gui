@@ -74,11 +74,9 @@
         this.loading = true
 
         try {
-          const route = `/environments/${this.environment_id}`
+          const route = `/environments/${this.environment_name}`
           const { data } = await this.axios.get(route)
           this.environment = data
-
-          console.log(data)
 
           if (!this.environmentReady) setTimeout(this.get_environment, 3000)
 
@@ -93,7 +91,7 @@
       async delete_environment() {
         if(!confirm('Delete this environment?')) return
         try {
-          const route = `/environments/${this.environment_id}`
+          const route = `/environments/${this.environment_name}`
           await this.axios.delete(route)
           this.$router.push({name: 'environments'})
 
@@ -104,8 +102,8 @@
 
     },
     computed: {
-      environment_id(){
-        return this.$route.params._id
+      environment_name(){
+        return this.$route.params.name
       },
       environmentReady(){
         const { readyReplicas, replicas } = this.environment.deployment.status

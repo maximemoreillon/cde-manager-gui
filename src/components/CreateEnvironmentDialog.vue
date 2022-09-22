@@ -70,8 +70,8 @@ export default {
         async create_environment() {
             try {
                 const route = '/environments'
-                const { data: { _id } } = await this.axios.post(route, this.environmentSettings)
-                this.$router.push({ name: 'environment', params: { _id } })
+                const { data: { name } } = await this.axios.post(route, this.environmentSettings)
+                this.$router.push({ name: 'environment', params: { name } })
 
             } catch (error) {
                 console.error(error)

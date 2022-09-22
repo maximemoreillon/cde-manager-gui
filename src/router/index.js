@@ -12,7 +12,7 @@ const routes = [
     component: Environments
   },
   {
-    path: '/environments/:_id',
+    path: '/environments/:name',
     name: 'environment',
     component: () => import('../views/Environment.vue')
   },

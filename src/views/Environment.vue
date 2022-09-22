@@ -18,40 +18,67 @@
         </v-col>
       </v-row>
     </v-toolbar>
-    <v-card-text v-if="environment">
-      <v-row align="baseline">
-        <v-col>
-          Name: {{environment.deployment.metadata.name}}
-        </v-col>
-      </v-row>
-      <v-row align="baseline">
+    <v-divider></v-divider>
 
-      </v-row>
+    <v-card-text v-if="environment">
+    
       <v-row align="baseline">
-        <v-col>
-          User: {{environment.deployment.metadata.labels.user_id}}
-        </v-col>
-      </v-row>
-      
-      <v-row align="baseline" >
         <v-col v-if="containerImage.includes('code-server')">
           URL: <a :href="environmentUrl" target="_blank">{{environmentUrl}}</a>
         </v-col>
         <v-col v-else>
           port: {{environment.service.spec.ports[0].nodePort}}
         </v-col>
-      </v-row>
-      <v-row align="baseline">
+        <v-spacer />
         <v-col cols="auto">
-          Status: 
+          Status:
         </v-col>
-        <v-col>
+        <v-col cols="auto">
           <v-chip :color="chipColor">
             {{ environmentReady ? 'Ready' : 'Not ready' }}
           </v-chip>
         </v-col>
       </v-row>
+      
     </v-card-text>
+
+    <v-expansion-panels flat v-if="environment">
+      <v-expansion-panel>
+        <v-expansion-panel-header>
+          Details
+        </v-expansion-panel-header>
+        <v-expansion-panel-content>
+          <v-list-item two-line>
+            <v-list-item-content>
+              <v-list-item-subtitle>Deployment name</v-list-item-subtitle>
+              <v-list-item-title>{{environment.deployment.metadata.name}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+    
+          <v-list-item two-line>
+            <v-list-item-content>
+              <v-list-item-subtitle>Container image</v-list-item-subtitle>
+              <v-list-item-title>{{environment.deployment.spec.template.spec.containers[0].image}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+    
+          <v-list-item two-line>
+            <v-list-item-content>
+              <v-list-item-subtitle>User</v-list-item-subtitle>
+              <v-list-item-title>{{environment.deployment.metadata.labels.user_id}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </v-expansion-panel-content>
+      </v-expansion-panel>
+    
+    </v-expansion-panels>
+
+
+
+   
+
+
+    
     
   </v-card>
 </template>

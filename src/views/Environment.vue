@@ -21,27 +21,24 @@
     <v-card-text v-if="environment">
       <v-row align="baseline">
         <v-col>
-          Name: {{environment.name}}
+          Name: {{environment.deployment.metadata.name}}
         </v-col>
       </v-row>
       <v-row align="baseline">
-        <v-col>
-          ID: {{environment._id}}
-        </v-col>
+
       </v-row>
       <v-row align="baseline">
         <v-col>
-          User: {{environment.user_id}}
+          User: {{environment.deployment.metadata.labels.user_id}}
         </v-col>
       </v-row>
-      <v-row align="baseline">
-        <v-col>
-          port: {{environment.service.spec.ports[0].nodePort}}
-        </v-col>
-      </v-row>
-      <v-row align="baseline" v-if="false">
-        <v-col>
+      
+      <v-row align="baseline" >
+        <v-col v-if="containerImage.includes('code-server')">
           <a :href="environmentUrl" target="_blank">{{environmentUrl}}</a>
+        </v-col>
+        <v-col v-else>
+          port: {{environment.service.spec.ports[0].nodePort}}
         </v-col>
       </v-row>
       <v-row align="baseline">
@@ -80,6 +77,8 @@
           const route = `/environments/${this.environment_id}`
           const { data } = await this.axios.get(route)
           this.environment = data
+
+          console.log(data)
 
           if (!this.environmentReady) setTimeout(this.get_environment, 3000)
 
@@ -129,6 +128,9 @@
         } = apiUrl
 
         return `${protocol}//${hostname}:${this.podNodeport}`
+      },
+      containerImage(){
+        return this.environment.deployment.spec.template.spec.containers[0].image
       }
     }
 

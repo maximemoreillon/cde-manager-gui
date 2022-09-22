@@ -15,15 +15,10 @@
         :items="items"
         :loading="loading">
 
-        <template v-slot:[`item._id`]="{ item }">
-          <router-link :to="{name: 'environment', params: {_id: item._id}}">
-            {{item._id}}
-          </router-link>
-        </template>
 
-        <template v-slot:[`item.name`]="{ item }">
-          <router-link :to="{name: 'environment', params: {_id: item._id}}">
-            {{item.name}}
+        <template v-slot:[`item.metadata.name`]="{ item }">
+          <router-link :to="{name: 'environment', params: {_id: item.metadata.name}}">
+            {{item.metadata.name}}
           </router-link>
         </template>
         
@@ -43,9 +38,8 @@ export default {
   data(){
     return {
       headers: [
-        { text: 'ID', value: '_id'},
-        { text: 'Name', value: 'name' },
-        { text: 'User ID', value: 'user_id' },
+        { text: 'Name', value: 'metadata.name'},
+        { text: 'User ID', value: 'metadata.labels.user_id' },
       ],
       items: [],
       loading: false,

@@ -35,7 +35,7 @@
       
       <v-row align="baseline" >
         <v-col v-if="containerImage.includes('code-server')">
-          <a :href="environmentUrl" target="_blank">{{environmentUrl}}</a>
+          URL: <a :href="environmentUrl" target="_blank">{{environmentUrl}}</a>
         </v-col>
         <v-col v-else>
           port: {{environment.service.spec.ports[0].nodePort}}
